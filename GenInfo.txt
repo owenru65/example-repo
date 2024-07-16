@@ -1,0 +1,116 @@
+
+
+IDE - VSC - Visual Studio Code
+
+
+Websites
+
+https://codingheroes.io/resources/
+
+Code Extensions
+
+
+- Prettier - Code Formatter
+- One Molokai Theme - code colour theme
+  - Settings -> themes -> colour themes -> Monokai Classic
+  - Settings -> themes -> File icon themes -> Seti (Visual Studio Code)
+
+- Image Preview
+- Color Highlight
+- Auto Rename Tag
+- Live Server
+
+
+Settings
+
+Default Formatter - set to Prettier above.
+Format on save - check the checkbox.
+Auto save - onFocusChange
+Tab size - 2
+HTML: Auto Close Tag
+
+
+CodePen
+
+codepen.io - write and test code
+
+HTML
+body
+header
+
+h1-h6
+ul - li
+ol - li
+article
+img -  src alt width height
+a - href target
+link - href to css file.
+aside
+footer
+
+
+CSS
+
+Selector - as per html
+id - only one per html file. Try not to use. Use class instead.
+class - can apply against multiple elements
+
+Box Model - https://www.udemy.com/course/design-and-develop-a-killer-website-with-html5-and-css3/learn/lecture/27512142?start=0#overview
+If two margins (top/bottom) occupy the same space this is called ‘collapsing margins’.  The largest margin value is used.
+
+Colours
+
+rgb ( red, green, blue ) - rgb (0, 255, 255 ) - cyan   - can also add transparency (alpha value). Use slide bar in VSCß
+
+
+Or in  hex (more usual):
+
+#00ffff
+
+Note if all three colour codes are the same we get a shade of grey. e.g.  rgb ( 255, 255, 255 ) or #ffffff
+
+Hex - if all codes the same we can use short hand - #ffffff becomes #fff
+
+Resolving Conflicting Declarations
+
+Resolve by given order
+
+	•	Declarations marked !important keyword - hack to use as a last resort to resolve conflicts in CSS
+
+	•	Inline style (style attribute in HTML) - we should not use inline.
+
+	•	Highest priority - id (#) selectors. If multiple id selectors, the last one in the code applied.
+
+	•	Next - class (.) or pseudo class (:) selector - if multiple the last one applied.
+
+	•	Next - element selector  (p, div, li, h1, etc)- if multiple the last one applied.
+
+	•	Universal selector
+
+
+Chrome dev tools - View-Developer-Developer Tools  OR  ALT-CMD-i
+
+Inheritance
+
+From body{} in CSS file. Mainly text elements inherited.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
