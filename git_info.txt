@@ -1,0 +1,261 @@
+-------
+CONFIG
+-------
+git config --list
+
+git config --global -l   # list settings 
+
+git config --global user.name "Russell Owen" 
+git config --global user.email "russell.owen@xx.com"
+
+git config --global http.proxy ""
+git config --global http.sslverify false
+
+
+Ver < 2.0 then
+git config --global push.default matching
+
+git init  = Create a new local repository
+
+Add to ~/.gitconfig file:
+
+[alias]
+    lg = log --topo-order --all --graph --date=local --pretty=format:'%C(green)%h%C(reset) %><(55,trunc)%s%C(red)%d%C(reset) %C(blue)[%an]%C(reset) %C(yellow)%ad%C(reset)%n'
+
+
+--------
+CHECKOUT
+--------
+
+Check out from a remote repo
+git clone ssh://git@stash.xxx..com:7999/project/proj.git
+
+git checkout master - switch back to master
+git remote - manage set of tracked repositories
+           - use with -v
+           - git remote -v  = shows the remote repositories to which the local is connected
+           - git remote prune origin - removes orphaned branches
+
+git branch -a  = list branches
+git fetch ?????? - download objects and refs from another repository.
+                   then use git merge to merge into local tree OR use
+git pull     - fetch from and merge with another repository or a local branch.
+git-push - Update remote refs along with associated objects
+
+
+Show info about the underlying repo:
+
+git remote show origin
+
+Repo name:
+
+git remote show origin 2>/dev/null | grep "Fetch URL" | awk -F: '{print $4}' | xargs basename
+
+-------
+MOVE
+-------
+
+git mv <options>... <args>...
+
+DESCRIPTION
+       This script is used to move or rename a file, directory or symlink.
+
+           git mv [-f] [-n] <source> <destination>
+           git mv [-f] [-n] [-k] <source> ... <destination directory>
+
+
+-------
+COMMIT
+-------
+
+git add file  - adds file to staging area
+git add file  - adds changes in an existing file to staging area
+
+rm file
+git rm file   - remove a file from staging area
+
+git commit    - commits file in staging to repo
+git commit -a -m "     " - adds to staging and commits in same command.
+
+git cherry-pick -x commit-id - Given one existing commit, apply the change the patch introduces, and record 
+                               a new commit that records it. This requires your working tree to be clean 
+                              (no modifications from the HEAD commit).
+
+git commit --amend     - Change the latest commit messgae - if it has not been PUSHED
+
+git reset HEAD file - to unstage an 'added' file.
+git reset HEAD~1     # resets back by 1 commit
+
+git checkout file - remove uncommitted changes that have been 'git added' to staging.
+
+-------
+LOG
+-------
+git log --no-merges --pretty --author="Russell Owen" origin/master
+git log --no-merges master..   Commits to branch only (from branches created from master)
+git log [file]      - shows log
+git log --all --decorate --oneline --graph   - gives more log info
+  - set up as alias graph?
+git log --name-only   - include file names in the commit
+git log --name-status - include file names and actions
+git log --stat        - include file names and change stats
+git log --no-merges --pretty --name-only --author=Russell origin/master
+git log --no-merges --since=2.months --pretty=format:"%h | %an | %ad | %s"
+git log -- .  - log of current dir (and sub dirs?)
+git log --pretty=oneline  - short form of log
+git log --oneline master..  -
+
+
+git show commitid - what was in the commit
+                  - git show $xx:./pom.xml   xx=commitid, use './'  if a file that appears more than once in a commit .... like pom.xml
+                  or
+                  - git show commitid filename
+
+-------
+TAG
+-------
+git show tagname  - what was in the tag
+git tagname commitid - create a tag at that commit
+git tag              - lists all tags
+Create tag on masteras above, then
+git push origin  tagname  e.g. git push origin 2018_61.10.0_START
+
+-------
+DIFF
+-------
+
+https://git-scm.com/book/en/v2/Git-Basics-Viewing-the-Commit-History#pretty_format
+
+git diff master...dev  - the entire history of the branch minus the entire history of master. 
+                         In other words, just the branch
+
+git diff master - diffs master with your branch (assuming you are in a branch)
+or
+git diff master...branch_name
+
+git diff HEAD file      - allows file to be diff'd once added but not committed
+git diff --staged file  - allows file to be diff'd once added but not committed
+
+
+git  diff --name-only --diff-filter=d origin/master src  
+              - list files changed between master branch and src dir in current branch.
+              - diff-filter=d  - exclude 'd'eleted files. Note diff-filter=D would mean include 'D'eleted files
+              - diff-filter=[(A|C|D|M|R|T|U|X|B)...[*]] - see https://git-scm.com/docs/git-diff
+
+-------
+BRANCH
+-------
+
+git branch branchName - creates a new branch - do in root dir of master (or current branch)
+
+git branch -a  - list branches  or just 'git branch'
+               - '-a' local and remote branches displayed.
+               - '-r' remote branches only displayed.
+               - branch with * next to it is current branch
+
+git checkout branchName - checks out the branch or switches us to the branch if
+                          we are in a checked out branch or master already
+
+git checkout master - switch back to master
+git remote prune origin - removes orphaned branches
+
+git diff master - diffs master with your branch (assuming you are in a branch)
+or
+git diff master...branch_name
+
+git symbolic-ref --short HEAD   - get name of current branch. e.g.
+                                % git symbolic-ref --short HEAD
+                                  feature/AFCTM-4220-mantas-us-automated-prototype-nov
+
+git stash - save changes without committing them?
+git stash list      - show stashes
+git stash list -p   - show stashes and associated changes
+git stash apply     - reapply the most recent stash
+git stash apply  label   - reapply the label stash
+git stash pop   - check cmd?
+git stash save "Msg/ino on stach"
+
+
+-------
+MERGE
+-------
+git merge branchName - merge changes in branchName to master.
+                       Fast forward merge   - move master to current branch IF current created from master 
+                         ==> direct path from master to branch
+                         - merge branchName into master from the master branch:
+                         - git merge branchName
+                           - output will show if it 'fast forward'
+                           - no additional commit required.
+                       Recursive merge - no direct path from master to branch.
+
+git merge --abort   - abort a merge
+
+git branch --merged  - shows merge info of branches.
+
+git branch -d branchName - delete branch branchName.
+                         - delete will fail if branch has not been merged.
+git branch -D branchName - delete branch branchName even if it has got unmerged changed.
+
+git checkout -b branchName - checks out/creates? branch branchName and switches to it.
+
+git checkout 96f5b71  - check out at commit 
+                      - could result in "detatched head" state.
+
+AFC git merge:
+
+    - git checkout master
+    - git pull
+    - git checkout <your feature branch>
+    - git merge master     or if merging a release branch to your feature branch ==> git merge origin/release/20.11.2
+    - manually resolve any merge conflict
+    - git commit -m "xxxxxxx"
+    - git push
+
+---------
+CONFLICTS
+---------
+
+Conflicts - see https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/resolving-a-merge-conflict-using-the-command-line
+
+vi the conflicted file. Sort out the conflict. i.e.
+
+<<<<<<<<<<<<
+code A
+===========
+code B
+>>>>>>>>>>>
+
+The use 'git add file' and commit as normal.
+
+-----
+
+ssh-keygen -t rsa -C "russell.owen@db.com"
+Add to BB
+
+-----
+Useful commands:
+
+git cherry-pick -x commit-id
+git log --no-merges --pretty --author="Russell Owen" origin/master
+git log --no-merges master..   Commits to branch only (from branches created from master)
+
+git checkout master - switch back to master
+git branch -a  = list branches
+git remote -v  = shows the remote repositories to which the local is connected
+git remote prune origin - removes orphaned branches
+
+git show commitid - what was in the commit
+                  - git show $xx:./pom.xml   xx=commitid, use './'  if a file that appears more than cone in a commit .... like pom.xml
+
+git show tagname  - what was in the tag
+
+git tagname commitid - create a tag at that commit
+git tag              - lists all tags
+Create tag on masteras above, then
+git push origin  tagname  e.g. git push origin 2018_61.10.0_START
+
+
+git log --pretty=oneline  - short form of log
+git log -- .  - log of current dir (and sub dirs?)
+
+
