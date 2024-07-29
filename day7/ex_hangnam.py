@@ -55,8 +55,9 @@ while not end_of_game:
       lives -=1 
 
   print(stages[lives])
-
-  print (curr_ans)
+  #Join all the elements in the list and turn it into a String.
+  print(f"{' '.join(curr_ans)}")
+  #print (curr_ans)
 
   if "_" not in curr_ans:
     end_of_game = True
